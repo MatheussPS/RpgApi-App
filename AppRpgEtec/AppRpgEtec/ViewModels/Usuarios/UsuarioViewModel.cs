@@ -93,7 +93,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
             }
         }
 
-        public async Task RegistrarUsuario()//Método para registrar um usuário     
+        public async Task RegistrarUsuario()
         {
             try
             {

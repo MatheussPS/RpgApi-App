@@ -40,6 +40,7 @@ namespace AppRpgEtec.ViewModels.Personagens
         private int vitorias;
         private int derrotas;
         private TipoClasse tipoClasseSelecionado;
+        private string personagemSelecionadoId;
 
         public int Id { get => id; set { id = value; OnPropertyChanged(); } }
         public string Nome { get => nome; set { nome = value; OnPropertyChanged(); } }
@@ -68,6 +69,17 @@ namespace AppRpgEtec.ViewModels.Personagens
 
         public TipoClasse TipoClasseSelecionado { get {return tipoClasseSelecionado; } set { if(value != null) {tipoClasseSelecionado = value; OnPropertyChanged(); } } }
 
+        public string PersonagemSelecionadoId
+        {
+            get { return personagemSelecionadoId; }
+            set{
+                if (value != null)
+                {
+                    personagemSelecionadoId = Uri.UnescapeDataString(value);
+                    CarregarPersonagem();
+                }
+            }
+        }
         public async Task ObterClasse()
         {
             try
@@ -104,8 +116,9 @@ namespace AppRpgEtec.ViewModels.Personagens
                 };
                 if (personagem.Id == 0)
                     await pService.PostPersonagemAsync(personagem);
-
-                await Application.Current.MainPage.DisplayAlert("Mensagem", "Dados salvos!", "Ok");
+                else
+                    await pService.PutPersonagemAsync (personagem);
+                    await Application.Current.MainPage.DisplayAlert("Mensagem", "Dados salvos!", "Ok");
                 await Shell.Current.GoToAsync("..");
 
             }
