@@ -1,21 +1,22 @@
-namespace AppRpgEtec.Views.Personagens;
 using AppRpgEtec.ViewModels.Personagens;
+
+namespace AppRpgEtec.Views.Personagens;
 
 public partial class ListagemView : ContentPage
 {
-	ListaPersonagemViewModel viewModel;
-	public ListagemView()
+    ListagemPersonagemViewModel viewModel;
+    public ListagemView()
 	{
 		InitializeComponent();
 
-		viewModel = new ListaPersonagemViewModel();
-		BindingContext = viewModel;
-		Title = "Personagens -App Rpg";
-	}
+        viewModel = new ListagemPersonagemViewModel();
+        BindingContext = viewModel;
+        Title = "Personagens - App Rpg Etec";
+    }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-		_ = viewModel.ObterPersonagens();
+        _ = viewModel.ObterPersonagens();
     }
 }

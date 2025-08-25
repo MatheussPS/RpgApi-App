@@ -32,6 +32,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
         #region AtributosPropriedades
         private string login = string.Empty;
         private string senha = string.Empty;
+        //CTRL R + E -> Cria propriedade do atributo
 
         public string Login
         {
@@ -55,8 +56,6 @@ namespace AppRpgEtec.ViewModels.Usuarios
 
         #region Metodos
 
-        private CancellationTokenSource _cancelTokenSource;
-        private bool _isCheckingLocation;
         public async Task AutenticarUsuario()
         {
             try
@@ -93,7 +92,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
             }
         }
 
-        public async Task RegistrarUsuario()
+        public async Task RegistrarUsuario()//Método para registrar um usuário     
         {
             try
             {
@@ -110,11 +109,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
 
                     await Application.Current.MainPage
                         .Navigation.PopAsync();//Remove a página da pilha de visualização
-                    Preferences.Set("UsuarioPerfil", mensagem, "Ok");
-                    Application.Current.MainPage = new ListagemView();
-
                 }
-
             }
             catch (Exception ex)
             {
@@ -142,7 +137,6 @@ namespace AppRpgEtec.ViewModels.Usuarios
 
 
         #endregion
-
 
     }
 }

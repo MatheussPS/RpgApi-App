@@ -1,15 +1,13 @@
-﻿using System;
+﻿using AppRpgEtec.Models;
+using AppRpgEtec.Models.Enuns;
+using AppRpgEtec.Services.Personagens;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AppRpgEtec.Models;
-using AppRpgEtec.Services;
-using AppRpgEtec.Models.Enuns;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace AppRpgEtec.ViewModels.Personagens
 {
@@ -18,16 +16,22 @@ namespace AppRpgEtec.ViewModels.Personagens
     {
         private PersonagemService pService;
         public ICommand SalvarCommand { get; }
-        public ICommand CancelarCommand { get; }
+        public ICommand CancelarCommand { get; set; }
+        
 
         public CadastroPersonagemViewModel()
         {
             string token = Preferences.Get("UsuarioToken", string.Empty);
             pService = new PersonagemService(token);
-            _ = ObterClasse();
 
+            _ = ObterClasses();
             SalvarCommand = new Command(async () => { await SalvarPersonagem(); });
-            CancelarCommand = new Command(async () => CancelarCadastro());
+            CancelarCommand = new Command(async => CancelarCadastro());
+        }
+
+        private async void CancelarCadastro()
+        {
+            await Shell.Current.GoToAsync("..");
         }
 
         private int id;
@@ -39,61 +43,139 @@ namespace AppRpgEtec.ViewModels.Personagens
         private int disputas;
         private int vitorias;
         private int derrotas;
-        private TipoClasse tipoClasseSelecionado;
-        private string personagemSelecionadoId;
 
-        public int Id { get => id; set { id = value; OnPropertyChanged(); } }
-        public string Nome { get => nome; set { nome = value; OnPropertyChanged(); } }
-        public int PontosVida { get => pontosVida; set { pontosVida = value; OnPropertyChanged(); } }
-        public int Forca { get => forca; set { forca = value; OnPropertyChanged(); } }
-        public int Defesa { get => defesa; set { defesa = value; OnPropertyChanged(); } }
-        public int Inteligencia { get => inteligencia; set { inteligencia = value; OnPropertyChanged(); } }
-        public int Disputas { get => disputas; set { disputas = value; OnPropertyChanged(); } }
-        public int Vitorias { get => vitorias; set { vitorias = value; OnPropertyChanged(); } }
-        public int Derrotas { get => derrotas; set { derrotas = value; OnPropertyChanged(); } }
-        
-        private ObservableCollection<TipoClasse> listaTipoClasse;
-        public ObservableCollection<TipoClasse> ListaTipoClasse 
-        { 
-            get { return listaTipoClasse; } 
-            set 
-            { 
-                listaTipoClasse = value; 
-                if(value != null)
-                {
-                    listaTipoClasse = value;
-                    OnPropertyChanged();
-                }
+        public int Id
+        {
+            get => id;
+            set
+            {
+                id = value;
+                OnPropertyChanged(nameof(Id));//Informa mundaça de estado para a View para ViewModel ou vice-versa de acordo com a herança da BaseViewModel
             }
         }
 
-        public TipoClasse TipoClasseSelecionado { get {return tipoClasseSelecionado; } set { if(value != null) {tipoClasseSelecionado = value; OnPropertyChanged(); } } }
-
-        public string PersonagemSelecionadoId
+        public string Nome
         {
-            get { return personagemSelecionadoId; }
-            set{
+            get => nome;
+            set
+            {
+                nome = value;
+                OnPropertyChanged(nameof(Nome));
+            }
+        }
+
+        public int PontosVida
+        {
+            get => pontosVida;
+            set
+            {
+                pontosVida = value;
+                OnPropertyChanged(nameof(PontosVida));
+            }
+        }
+
+        public int Forca
+        {
+            get => forca;
+            set
+            {
+                forca = value;
+                OnPropertyChanged(nameof(Forca));
+            }
+        }
+
+        public int Defesa
+        {
+            get => defesa;
+            set
+            {
+                defesa = value;
+                OnPropertyChanged(nameof(Defesa));
+            }
+        }
+
+        public int Inteligencia
+        {
+            get => inteligencia;
+            set
+            {
+                inteligencia = value;
+                OnPropertyChanged(nameof(Inteligencia));
+            }
+        }
+
+        public int Disputas
+        {
+            get => disputas;
+            set
+            {
+                disputas = value;
+                OnPropertyChanged(nameof(Disputas));
+            }
+        }
+
+        public int Vitorias
+        {
+            get => vitorias;
+            set
+            {
+                vitorias = value;
+                OnPropertyChanged(nameof(Vitorias));
+            }
+        }
+
+        public int Derrotas
+        {
+            get => derrotas;
+            set
+            {
+                derrotas = value;
+                OnPropertyChanged(nameof(Derrotas));
+            }
+        }
+
+        private ObservableCollection<TipoClasse> listaTiposClasse;
+        public ObservableCollection<TipoClasse> ListaTiposClasse
+        {
+            get { return listaTiposClasse; }
+            set
+            {
                 if (value != null)
                 {
-                    personagemSelecionadoId = Uri.UnescapeDataString(value);
-                    CarregarPersonagem();
+                    listaTiposClasse = value;
+                    OnPropertyChanged(nameof(ListaTiposClasse));
                 }
             }
         }
-        public async Task ObterClasse()
+
+        public async Task ObterClasses()
         {
             try
             {
-                ListaTipoClasse = new ObservableCollection<TipoClasse>();
-                ListaTipoClasse.Add(new TipoClasse() { Id = 1, Descricao = "Cavaleiro" });
-                ListaTipoClasse.Add(new TipoClasse() { Id = 2, Descricao = "Mago" });
-                ListaTipoClasse.Add(new TipoClasse() { Id = 3, Descricao = "Clerigo" });
-                OnPropertyChanged(nameof(ListaTipoClasse));
+                ListaTiposClasse = new ObservableCollection<TipoClasse>();
+                ListaTiposClasse.Add(new TipoClasse() { Id = 1, Descricao = "Cavaleiro" });
+                ListaTiposClasse.Add(new TipoClasse() { Id = 2, Descricao = "Mago" });
+                ListaTiposClasse.Add(new TipoClasse() { Id = 3, Descricao = "Clerigo" });
+                OnPropertyChanged(nameof(ListaTiposClasse));
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 await Application.Current.MainPage
-                    .DisplayAlert("Ops", ex.Message + "Detalhes: " + ex.InnerException, "Ok");
+                    .DisplayAlert("Ops", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
+            }
+        }
+
+        private TipoClasse tipoClasseSelecionado;
+        public TipoClasse TipoClasseSelecionado
+        {
+            get { return tipoClasseSelecionado; }
+            set
+            {
+                if (value != null)
+                {
+                    tipoClasseSelecionado = value;
+                    OnPropertyChanged(nameof(TipoClasseSelecionado));
+                }
             }
         }
 
@@ -101,7 +183,7 @@ namespace AppRpgEtec.ViewModels.Personagens
         {
             try
             {
-                Personagem personagem = new Personagem()
+                Personagem model = new Personagem()
                 {
                     Nome = this.nome,
                     PontosVida = this.pontosVida,
@@ -114,44 +196,64 @@ namespace AppRpgEtec.ViewModels.Personagens
                     Id = this.id,
                     Classe = (ClasseEnum)tipoClasseSelecionado.Id
                 };
-                if (personagem.Id == 0)
-                    await pService.PostPersonagemAsync(personagem);
+                if (model.Id == 0)
+                    await pService.PostPersonagemAsync(model);               
                 else
-                    await pService.PutPersonagemAsync (personagem);
-                    await Application.Current.MainPage.DisplayAlert("Mensagem", "Dados salvos!", "Ok");
-                await Shell.Current.GoToAsync("..");
+                    await pService.PutPersonagemAsync(model);
 
+                await Application.Current.MainPage
+                       .DisplayAlert("Mensagem", "Dados salvos com sucesso!", "Ok");
+
+                await Shell.Current.GoToAsync(".."); //Remove a página atual da pilha de páginas                 
             }
-            catch (Exception ex) {
-                Application.Current.MainPage.DisplayAlert("Ops", ex.Message + "Detalhes: " + ex.InnerException, "Ok");
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage
+                    .DisplayAlert("Ops", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
             }
         }
-        public async void CancelarCadastro()
-        {
-            await Shell.Current.GoToAsync("..");
-        }
-
         public async void CarregarPersonagem()
         {
             try
             {
-                Personagem p = await pService.GetPersonagemAsync(int.Parse(PersonagemSelecionadoId));
+                Personagem p = await pService.GetPersonagemAsync(int.Parse(personagemSelecionadoId));
 
-                Nome = p.Nome;
-                PontosVida = p.PontosVida;
-                Defesa = p.Defesa;
-                Derrotas = p.Derrotas;
-                Disputas = p.Disputas;
-                Forca = p.Forca;
-                Inteligencia = p.Inteligencia;
-                Vitorias = p.Vitorias;
-                Id = p.Id;
+                this.Nome = p.Nome;
+                this.PontosVida = p.PontosVida;
+                this.Defesa = p.Defesa;
+                this.Derrotas = p.Derrotas;
+                this.Disputas = p.Disputas;
+                this.Forca = p.Forca;
+                this.Inteligencia = p.Inteligencia;
+                this.Vitorias = p.Vitorias;
+                this.Id = p.Id;
 
-                TipoClasseSelecionado = this.ListaTipoClasse.FirstOrDefault(tipo => tipo.Id == (int)p.Classe);
+                TipoClasseSelecionado = this.ListaTiposClasse
+                .FirstOrDefault(tClasse => tClasse.Id == (int)p.Classe);
             }
-            catch (Exception ex){
-                await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + "Detalhes: " + ex.InnerException, "Ok");
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage
+                    .DisplayAlert("Ops", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
             }
         }
+
+        private string personagemSelecionadoId;//CTRL + R,E
+        public string PersonagemSelecionadoId
+        {
+            set
+            {
+                if (value != null)
+                {
+                    personagemSelecionadoId = Uri.UnescapeDataString(value);
+                    CarregarPersonagem();
+                }
+            }
+        }
+
+
+
+
+
     }
 }

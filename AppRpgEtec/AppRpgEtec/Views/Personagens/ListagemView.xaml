@@ -4,16 +4,18 @@
              x:Class="AppRpgEtec.Views.Personagens.ListagemView"
              Title="ListagemView">
     <Shell.TitleView>
-        <Button Command="{Binding NovoPersonagemCommand}" Text=" Novo" HorizontalOptions="End"></Button>
+        <Button Command="{Binding NovoPersonagemCommand}" Text="Novo" HorizontalOptions="End"></Button>
     </Shell.TitleView>
-        <ScrollView>
+    
+    <ScrollView>
         <VerticalStackLayout Padding="10, 0, 0, 0" VerticalOptions="FillAndExpand">
-            <ListView x:Name="listView" HasUnevenRows="True" ItemsSource="{Binding Personagens}" SelectedItem="{Binding PersonagemSelecionado}">
+            <ListView x:Name="listView" HasUnevenRows="True" 
+                      ItemsSource="{Binding Personagens}" SelectedItem="{Binding PersonagemSelecionado}" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.ContextActions>
-                                <MenuItem Text="Remmover" IsDestructive="True"
+                                <MenuItem Text="Remover" IsDestructive="True"                                          
                                     Command="{Binding Path=BindingContext.RemoverPersonagemCommand, Source={x:Reference listView}}"
                                     CommandParameter="{Binding .}"></MenuItem>
                             </ViewCell.ContextActions>
@@ -27,4 +29,5 @@
             </ListView>
         </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>
