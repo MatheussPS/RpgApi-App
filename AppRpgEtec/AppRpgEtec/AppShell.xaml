@@ -3,15 +3,14 @@
     x:Class="AppRpgEtec.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:AppRpgEtec"
+    xmlns:local="clr-namespace:AppRpgEtec.Views"
     xmlns:viewsPersonagens="clr-namespace:AppRpgEtec.Views.Personagens"
-    xmlns:viewsUsuarios ="clr-namespace:AppRpgEtec.Views.Usuarios"
-    xmlns:viewsDisputas ="clr-namespace:AppRpgEtec.Views.Disputas"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:viewsUsuarios="clr-namespace:AppRpgEtec.Views.Usuarios"
+    xmlns:viewsDisputas="clr-namespace:AppRpgEtec.Views.Disputas"
+    
     Title="AppRpgEtec">
 
     <Shell.FlyoutHeaderTemplate>
-        
         <DataTemplate>
             <Grid>
                 <Grid.RowDefinitions>
@@ -21,8 +20,8 @@
                 </Grid.RowDefinitions>
                 <FlexLayout Grid.Row="0" Direction="Row" AlignItems="Center" >
                     <Frame Padding="0" CornerRadius="40"
-                           HeightRequest="80" WidthRequest="80" >
-                        <Image Source="has_logo_transparente.png"/>
+                            HeightRequest="80" WidthRequest="80" >
+                        <Image/>
                     </Frame>
                     <VerticalStackLayout Padding="10,0,0,0" Spacing="0">
                         <Label Text="App RPG Etec" FontAttributes="Bold" FontSize="Medium" />
@@ -34,10 +33,24 @@
     </Shell.FlyoutHeaderTemplate>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="Home" Icon="home.svg" ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage"/>
-        <ShellContent Title="Usuários" Icon="menuusuarios.png" ContentTemplate="{DataTemplate viewsUsuarios:ListagemView}"/>
-        <ShellContent Title="Personagens" Icon="menupersonagens.png" ContentTemplate="{DataTemplate viewsPersonagens:ListagemView}"/>
-        <ShellContent Title="Disputas" Icon="menudisputas.png" ContentTemplate="{DataTemplate viewsDisputas:ListagemView}"/>
+
+                <ShellContent
+                    Title="Home" Icon="home.png"
+                    ContentTemplate="{DataTemplate viewsPersonagens:ListagemView}"
+                    Route="MainPage" />
+
+
+                <ShellContent
+                    Title="Usuários" Icon="menuusuarios.png"
+                    ContentTemplate="{DataTemplate viewsUsuarios:LocalizacaoView}" />
+
+                <ShellContent
+                    Title="Personagens" Icon="menupersonagens.png"
+                    ContentTemplate="{DataTemplate viewsPersonagens:ListagemView}" />
+
+                <ShellContent
+                    Title="Disputas" Icon="menudisputas.png"
+                    ContentTemplate="{DataTemplate viewsDisputas:ListagemView}" />
 
         <Tab Title="Info" Route="info" Icon="info.png">
             <ShellContent Title="Sobre" Route="sobre" ContentTemplate="{DataTemplate local:AboutView}"/>
@@ -45,12 +58,12 @@
         </Tab>
     </FlyoutItem>
 
-
-    <ShellContent Title="Sair" Icon="exit.png" ContentTemplate="{DataTemplate viewsUsuarios:LoginView}" 
+    <ShellContent Title="Sair" Icon="exit.png" ContentTemplate="{DataTemplate viewsUsuarios:LoginView}"
                   Shell.FlyoutBehavior="Disabled"/>
 
     <Shell.FlyoutFooter>
-        <Label x:Name="lblLogin" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <Label x:Name="lblLogin" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"></Label>
     </Shell.FlyoutFooter>
+
 
 </Shell>

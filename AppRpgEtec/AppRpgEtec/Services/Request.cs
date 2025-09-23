@@ -75,6 +75,7 @@ namespace AppRpgEtec.Services
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization
                 = new AuthenticationHeaderValue("Bearer", token);
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "AppRpgEtec/1.0 (pscosta2008@gmail.com)");
 
             HttpResponseMessage response = await httpClient.GetAsync(uri);
             string serialized = await response.Content.ReadAsStringAsync();
