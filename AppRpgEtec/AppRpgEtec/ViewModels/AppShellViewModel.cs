@@ -13,7 +13,7 @@ namespace AppRpgEtec.ViewModels
     {
 
         private UsuarioService usuarioService;
-        private static string conexaoAzureStorage = "CHAVE";
+        private static string conexaoAzureStorage = "";
         private static string container = "arquivos";
 
         private byte[] foto;

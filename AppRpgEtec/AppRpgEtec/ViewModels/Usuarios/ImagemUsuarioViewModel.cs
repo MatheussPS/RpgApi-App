@@ -14,7 +14,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
     {
 
         private UsuarioService uService;
-        private static string conexaoAzureStorage = "CHAVE";
+        private static string conexaoAzureStorage = "";
         private static string container = "arquivos";
 
         private ImageSource fonteImagem;
