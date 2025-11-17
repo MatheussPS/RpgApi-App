@@ -25,7 +25,7 @@ namespace AppRpgEtec.ViewModels.Personagens
             pService = new PersonagemService(token);
 
             _ = ObterClasses();
-            SalvarCommand = new Command(async () => { await SalvarPersonagem(); });
+            SalvarCommand = new Command(async () => { await SalvarPersonagem(); }, ()=> ValidarCampos());
             CancelarCommand = new Command(async => CancelarCadastro());
         }
 
@@ -44,6 +44,14 @@ namespace AppRpgEtec.ViewModels.Personagens
         private int vitorias;
         private int derrotas;
 
+        public bool CadastroHabilitado
+        {
+            get
+            {
+                return (PontosVida > 0);
+            }
+        }
+
         public int Id
         {
             get => id;
@@ -61,6 +69,7 @@ namespace AppRpgEtec.ViewModels.Personagens
             {
                 nome = value;
                 OnPropertyChanged(nameof(Nome));
+                ((Command)SalvarCommand).ChangeCanExecute();
             }
         }
 
@@ -71,6 +80,7 @@ namespace AppRpgEtec.ViewModels.Personagens
             {
                 pontosVida = value;
                 OnPropertyChanged(nameof(PontosVida));
+                OnPropertyChanged(nameof(CadastroHabilitado));
             }
         }
 
@@ -132,6 +142,14 @@ namespace AppRpgEtec.ViewModels.Personagens
                 derrotas = value;
                 OnPropertyChanged(nameof(Derrotas));
             }
+        }
+
+        public bool ValidarCampos()
+        {
+            return !string.IsNullOrEmpty(Nome)
+                && CadastroHabilitado
+                && Forca != 0
+                && Defesa != 0;
         }
 
         private ObservableCollection<TipoClasse> listaTiposClasse;
