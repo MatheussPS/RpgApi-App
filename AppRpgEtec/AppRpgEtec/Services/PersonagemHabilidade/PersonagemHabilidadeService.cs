@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Android.Database;
 
 namespace AppRpgEtec.Services.PersonagemHabilidade
 {

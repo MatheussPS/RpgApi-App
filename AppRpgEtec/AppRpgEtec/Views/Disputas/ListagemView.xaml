@@ -49,6 +49,9 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Label Text="Atacante:" 
@@ -70,11 +73,24 @@
                    Grid.Column="1" 
                    Grid.Row="1"
                    TextColor="Blue" />
+            <Picker Title="---Selecione a habilidade do primeiro combatente---"
+                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                    ItemsSource="{Binding Habilidades}"
+                    ItemDisplayBinding="{Binding HabilidadeNome}"
+                    SelectedItem="{Binding HabilidadeSelecionada}"/>
+            <Button Text="Disputas com Habilidades" FontAttributes="Bold"
+                    Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                    VerticalOptions="FillAndExpand" Command="{Binding DisputaComHabilidadeCommand}"/>
+
+            <Button Text="Disputar com Arma" FontAttributes="Bold"
+                    Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                    VerticalOptions="FillAndExpand" Command="{Binding DisputaComArmaCommand}"/>
         </Grid>
         <Button Text="Disputar com Arma" FontAttributes="Bold"
-                Grid.Row="2" Grid.Column="0" GridColumnSpan="2"
-                VerticalOptions="FillAndExpand" Command="{Binding DisputaComArmaCommand}"
+                Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                VerticalOptions="FillAndExpand" Command="{Binding DisputaGeralCommand}"/>
+        
 
     </VerticalStackLayout>
-
+    
 </ContentPage>
