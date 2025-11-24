@@ -48,6 +48,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Label Text="Atacante:" 
@@ -70,6 +71,9 @@
                    Grid.Row="1"
                    TextColor="Blue" />
         </Grid>
+        <Button Text="Disputar com Arma" FontAttributes="Bold"
+                Grid.Row="2" Grid.Column="0" GridColumnSpan="2"
+                VerticalOptions="FillAndExpand" Command="{Binding DisputaComArmaCommand}"
 
     </VerticalStackLayout>
 

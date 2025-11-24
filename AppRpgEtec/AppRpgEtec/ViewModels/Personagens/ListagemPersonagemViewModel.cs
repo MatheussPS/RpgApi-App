@@ -159,13 +159,25 @@ namespace AppRpgEtec.ViewModels.Personagens
                 personagemSelecionado = null;
                 string result = string.Empty;
 
-                result = await Application.Current.MainPage
+                if (p.PontosVida >= 0)
+                {
+                    result = await Application.Current.MainPage
                     .DisplayActionSheet("Opções para o pesonagem " + p.Nome,
                     "Cancelar",
                     "Editar",
                     "Restaurar Vida",
                     "Zerar Ranking",
                     "Remover");
+                }
+                else
+                {
+                    result = await Application.Current.MainPage
+                        .DisplayActionSheet($"Opções para o personagem {p.Nome}",
+                        "Cancelar",
+                        "Restaurar Vida"
+                         );
+                }
+
 
                 if (result != null)
                 {
