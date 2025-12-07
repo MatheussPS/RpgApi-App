@@ -179,24 +179,31 @@ namespace AppRpgEtec.ViewModels.Disputas
         {
             try
             {
-                DisputaPersonagens.AtacanteId = Atacante.Id;
-                DisputaPersonagens.OponenteId = Oponente.Id;
-                DisputaPersonagens = await dService.PostDisputaComArmaAsync(DisputaPersonagens);
+                var disputa = new Disputa
+                {
+                    Narracao = "E então: ",
+                    AtacanteId = Atacante.Id,
+                    OponenteId = Oponente.Id
+                };
+
+                var resultado = await dService.PostDisputaComArmaAsync(disputa);
 
                 await Application.Current.MainPage
-                    .DisplayAlert("Resultado", DisputaPersonagens.Narracao, "Ok");
-
-            }catch(Exception ex)
+                    .DisplayAlert("Resultado", resultado.Narracao, "Ok");
+            }
+            catch (Exception ex)
             {
                 await Application.Current.MainPage
-                    .DisplayAlert("Ops", ex.Message + "Detalhes: " + ex.InnerException, "Ok");
+                    .DisplayAlert("Ops", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
             }
         }
+
 
         private async Task ExecutarDisputaHabilidades()
         {
             try
             {
+                DisputaPersonagens.Narracao = "E então: ";
                 DisputaPersonagens.AtacanteId = Atacante.Id;
                 DisputaPersonagens.OponenteId = Oponente.Id;
                 DisputaPersonagens.HabilidadeId = habilidadeSelecionada.HabilidadeId;
@@ -216,6 +223,7 @@ namespace AppRpgEtec.ViewModels.Disputas
         {
             try
             {
+                DisputaPersonagens.Narracao = "E então: ";
                 ObservableCollection<Personagem> lista = await pService.GetPersonagensAsync();
                 DisputaPersonagens.ListaIdPersonagens = lista.Select(x => x.Id).ToList();
 
